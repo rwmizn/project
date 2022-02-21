@@ -1,0 +1,146 @@
+
+<html>
+    <head>
+        <title>HTML5 Canvas Winning Wheel</title>
+        <link rel="stylesheet" href="main.css" type="text/css" />
+        <script type="text/javascript" src="Winwheel.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+        
+        
+        <style>
+        
+        .iconloca{
+				margin: auto;
+				width: 500px;
+				height: 0;
+        }
+        .iconloca img{
+				width:50px;
+				margin-left:225.5px;
+				position: relative;
+				margin-top:46px;
+				
+        }
+        
+        </style>
+        
+    </head>
+    <body>
+    
+    
+    <div class="iconloca">
+    
+	<img src="location.png"/>    
+
+
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        <div align="center">
+                        <canvas id="canvas" width="434" height="434">
+                            <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                        </canvas>
+       </div>
+       
+       <div>
+       
+			<button onclick="spin()" style=" width:200px;margin-left:300px ; margin-top:80px;"> Spin </button>
+       </div>
+       
+       
+       <p id="aa"></p>
+       
+		<script>
+		// Create new wheel object specifying the parameters at creation time.
+		var theWheel = new Winwheel({
+			'numSegments'  : 8,     // Specify number of segments.
+			'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
+			'textFontSize' : 28,    // Set font size as desired.
+			'segments'     :        // Define segments including colour and text.
+			[
+				{'fillStyle' : '#eae56f', 'text' : 'Prize 1'},
+				{'fillStyle' : '#89f26e', 'text' : 'Prize 2'},
+				{'fillStyle' : '#7de6ef', 'text' : 'poch'},
+				{'fillStyle' : '#e7706f', 'text' : 'Prize 4'},
+				{'fillStyle' : '#eae56f', 'text' : 'Prize 5'},
+				{'fillStyle' : '#89f26e', 'text' : 'Prize 6'},
+				{'fillStyle' : '#7de6ef', 'text' : 'Prize 7'},
+				{'fillStyle' : '#e7706f', 'text' : 'Prize 8'}
+			],
+			'animation' :           // Specify the animation to use.
+			{
+				'type' : 'spinToStop',
+				'stopAngle':null,
+				'callbackFinished' : alertPrize,
+				'duration' : 10
+			}
+		});
+
+		
+		
+			
+			let aa=getint(1,45);
+			
+			let xx=0;
+			if(xx==1){
+			let Angle=theWheel.animation["stopAngle"]=1;
+		}else{
+			let aa="";
+			
+	
+			
+			let Angle=theWheel.animation["stopAngle"]=aa;
+			
+		}
+
+			
+		
+		
+		
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("aa").innerHTML = this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "test.php?", true);
+			xmlhttp.send();
+			
+			
+
+			
+
+	
+			
+			
+		
+			
+			
+			
+		
+			function alertPrize(indicatedSegment)
+			{
+				// Do basic alert of the segment text.
+				// You would probably want to do something more interesting with this information.
+				alert("You have won " + indicatedSegment.text);
+				theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+				theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+				theWheel.draw();  
+			}	
+		
+		function spin(){
+			
+			theWheel.startAnimation();
+		}
+		
+		
+
+		</script>
+		
+    </body>
+</html>
